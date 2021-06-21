@@ -4,6 +4,13 @@ const express = require("express");
 
 const bodyParser = require("body-parser");
 
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://user:Zordan389@cluster0.xsqei.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+  { useNewUrlParser: true,
+    useUnifiedTopology: true })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
+
 const app = express();
 
 // CORS
@@ -32,6 +39,13 @@ app.post("/api/sauces/:id", (req, res, next) => {
     message: "Objet créé !",
   });
 });
+
+app.post("/api/sauces/:id/like", (req, res, next) => {
+    console.log(req.body);
+    res.status(201).json({
+      message: "Objet créé !",
+    });
+  });
 
 // Middlewares GET
 
