@@ -13,6 +13,10 @@ mongoose.connect('mongodb+srv://user:Zordan389@cluster0.xsqei.mongodb.net/myFirs
 
 const app = express();
 
+const Sauce = require('./models/Sauce');
+
+const User = require('./models/User');
+
 // CORS
 
 app.use((req, res, next) => {
