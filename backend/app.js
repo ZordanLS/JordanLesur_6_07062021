@@ -1,24 +1,17 @@
 // Importations
 
 const express = require("express");
-
 const bodyParser = require("body-parser");
-
 const mongoose = require("mongoose");
+const saucesRoutes = require("./routes/sauce");
+const userRoutes = require("./routes/user");
+
 mongoose
   .connect("mongodb+srv://user:Zordan389@cluster0.xsqei.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
   .catch(() => console.log("Connexion à MongoDB échouée !"));
 
 const app = express();
-
-const saucesRoutes = require("./routes/sauce");
-
-const userRoutes = require('./routes/user');
-
-app.use("/api/sauces", saucesRoutes);
-
-app.use('/api/auth', userRoutes);
 
 // CORS
 
@@ -30,5 +23,9 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+
+app.use("/api/sauces", saucesRoutes);
+
+app.use("/api/auth", userRoutes);
 
 module.exports = app;
