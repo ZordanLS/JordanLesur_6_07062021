@@ -1,6 +1,8 @@
 const Sauce = require("../models/sauce");
 const fs = require("fs");
 
+// Fonction de création d'une sauce
+
 exports.createSauce = (req, res, next) => {
   const sauceObject = JSON.parse(req.body.sauce);
   console.log(sauceObject);
@@ -20,6 +22,8 @@ exports.createSauce = (req, res, next) => {
     });
 };
 
+// Fonction de récupération des informations d'une sauce
+
 exports.getOneSauce = (req, res, next) => {
   Sauce.findOne({
     _id: req.params.id,
@@ -34,6 +38,8 @@ exports.getOneSauce = (req, res, next) => {
     });
 };
 
+// Fonction de modification d'une sauce
+
 exports.modifySauce = (req, res, next) => {
   const sauceObjet = req.file
     ? {
@@ -45,6 +51,8 @@ exports.modifySauce = (req, res, next) => {
     .then(() => res.status(201).json({ message: "Sauce modifiée !" }))
     .catch((error) => res.status(400).json({ error: error }));
 };
+
+// Fonction de suppression d'une sauce
 
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
@@ -59,6 +67,8 @@ exports.deleteSauce = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// Fonction de récupération des informations de toutes les sauces
+
 exports.getAllSauces = (req, res, next) => {
   Sauce.find()
     .then((Sauces) => {
@@ -70,6 +80,58 @@ exports.getAllSauces = (req, res, next) => {
       });
     });
 };
+
+// Fonctions pour les différents cas de figure like/dislike
+
+function Like(idSauce, idUser, res) {
+  Sauce.updateOne(
+    { _id: idSauce },
+    {
+      $inc: { likes: 1 },
+      $push: { usersLiked: idUser },
+    }
+  )
+    .then(() => res.status(201).json({ message: "Sauce mise à jour" }))
+    .catch((error) => res.status(404).json({ error }));
+}
+
+function Dislike(idSauce, idUser, res) {
+  Sauce.updateOne(
+    { _id: idSauce },
+    {
+      $inc: { dislikes: 1 },
+      $push: { usersDisliked: idUser },
+    }
+  )
+    .then(() => res.status(201).json({ message: "Sauce mise à jour" }))
+    .catch((error) => res.status(404).json({ error }));
+}
+
+function removeLike(idSauce, idUser, res) {
+  Sauce.updateOne(
+    { _id: idSauce },
+    {
+      $inc: { likes: -1 },
+      $pull: { usersLiked: idUser },
+    }
+  )
+    .then(() => res.status(201).json({ message: "Sauce mise à jour" }))
+    .catch((error) => res.status(404).json({ error }));
+}
+
+function removeDislike(idSauce, idUser, res) {
+  Sauce.updateOne(
+    { _id: idSauce },
+    {
+      $inc: { dislikes: -1 },
+      $pull: { usersDisliked: idUser },
+    }
+  )
+    .then(() => res.status(201).json({ message: "Sauce mise à jour" }))
+    .catch((error) => res.status(404).json({ error }));
+}
+
+// Fonction globale like/dislike qui appelle les fonctions précédentes avec switch pour gérer les différents cas de figure
 
 exports.likeSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }).then((sauceInfos) => {
@@ -86,56 +148,8 @@ exports.likeSauce = (req, res, next) => {
       case -1:
         return Dislike(req.params.id, req.body.userId, res);
       default:
-        res.status(404).json({ msg: "mal structured request" });
+        res.status(404).json({ error });
         return;
     }
   });
 };
-
-function removeDislike(idSauce, idUser, res) {
-  Sauce.updateOne(
-    { _id: idSauce },
-    {
-      $inc: { dislikes: -1 },
-      $pull: { usersDisliked: idUser },
-    }
-  )
-    .then(() => res.status(201).json({ message: "Objet mit à jour !" }))
-    .catch((error) => res.status(404).json({ error }));
-}
-
-function removeLike(idSauce, idUser, res) {
-  Sauce.updateOne(
-    { _id: idSauce },
-    {
-      $inc: { likes: -1 },
-      $pull: { usersLiked: idUser },
-    }
-  )
-    .then(() => res.status(201).json({ message: "Objet mit à jour !" }))
-    .catch((error) => res.status(404).json({ error }));
-}
-
-function Like(idSauce, idUser, res) {
-  Sauce.updateOne(
-    { _id: idSauce },
-    {
-      $inc: { likes: 1 },
-      $push: { usersLiked: idUser },
-    }
-  )
-    .then(() => res.status(201).json({ message: "Objet mit à jour !" }))
-    .catch((error) => res.status(404).json({ error }));
-}
-
-function Dislike(idSauce, idUser, res) {
-  Sauce.updateOne(
-    { _id: idSauce },
-    {
-      $inc: { dislikes: 1 },
-      $push: { usersDisliked: idUser },
-    }
-  )
-    .then(() => res.status(201).json({ message: "Objet mit à jour !" }))
-    .catch((error) => res.status(404).json({ error }));
-}
