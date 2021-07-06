@@ -1,2 +1,0 @@
-Faire tester à Nathan (il peut l'ouvrir?)
-Vérifier RGPD et OWASP
