@@ -1,5 +1,3 @@
-Créer un nouveau user MongoDB (readwrite)
-Le changer dans le code
 Faire tester à Nathan (il peut l'ouvrir?)
 Faire un readme
 Vérifier RGPD et OWASP
