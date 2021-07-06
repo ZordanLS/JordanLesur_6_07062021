@@ -1,8 +1,12 @@
+// Importation des modules d'authentification
+
 const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+
+// Fonction de création de compte utilisateur
 
 exports.signup = (req, res, next) => {
   bcrypt
@@ -21,6 +25,8 @@ exports.signup = (req, res, next) => {
       console.log(error);
       return res.status(500).json({ error })});
 };
+
+// Fonction de connection
 
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })

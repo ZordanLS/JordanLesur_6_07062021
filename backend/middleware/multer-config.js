@@ -1,3 +1,5 @@
+// Middleware d'upload d'images
+
 const multer = require('multer');
 
 const MIME_TYPES = {

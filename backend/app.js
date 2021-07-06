@@ -7,6 +7,8 @@ const saucesRoutes = require("./routes/sauce");
 const userRoutes = require("./routes/user");
 const path = require("path");
 
+// Connection à la base de données
+
 mongoose
   .connect("mongodb+srv://user:Zordan389@cluster0.xsqei.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connexion à MongoDB réussie !"))
@@ -24,6 +26,8 @@ app.use((req, res, next) => {
 });
 
 app.use(bodyParser.json());
+
+// Déclaration des différents chemins
 
 app.use("/api/sauces", saucesRoutes);
 

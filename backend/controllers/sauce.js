@@ -131,7 +131,7 @@ function removeDislike(idSauce, idUser, res) {
     .catch((error) => res.status(404).json({ error }));
 }
 
-// Fonction globale like/dislike qui appelle les fonctions précédentes avec switch pour gérer les différents cas de figure
+// Fonction globale like/dislike qui appelle les fonctions précédentes avec switch pour gérer les différents cas de figure et avoir un meilleure structure qu'avec des if/else
 
 exports.likeSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id }).then((sauceInfos) => {
