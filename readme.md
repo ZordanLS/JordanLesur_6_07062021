@@ -1,6 +1,8 @@
 Projet 6 de la formation Développeur Web - OpenClassrooms
 Jordan LESUR
 
+!!! Pour faire fonctionner ce projet, vous aurez besoin d'un .env qui contient la connexion à la base de données (DATABASE_URL_USER) !!!
+
 ## So Pekocko
 
 Pour faire fonctionner le projet, vous devez installer :
