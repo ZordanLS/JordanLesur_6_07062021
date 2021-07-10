@@ -1,7 +1,7 @@
 Projet 6 de la formation Développeur Web - OpenClassrooms
 Jordan LESUR
 
-!!! Pour faire fonctionner ce projet, vous aurez besoin d'un .env qui contient la connexion à la base de données (DATABASE_URL_USER) !!!
+!!! Pour faire fonctionner ce projet, vous aurez besoin d'un .env qui contient l'URL de connexion à la base de données (DATABASE_URL_USER) !!!
 
 ## So Pekocko
 
